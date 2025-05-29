@@ -38,6 +38,8 @@ public class Principal {
                     4- Buscar serie por titulo
                     5- Top 5 series con mejor evaluación
                     6- Mostrar series por categoría
+                    7- Mostrar series por temporadas y evaluación
+                    8- Mostrar episodios por nombre
                     0- Salir
                     """;
             System.out.println(menu);
@@ -62,6 +64,12 @@ public class Principal {
                     break;
                 case 6:
                     buscarSeriesPorCategoria();
+                    break;
+                case 7:
+                    mostrarSeriesPorTemporadasYEvaluacion();
+                    break;
+                case 8:
+                    buscarEpisodiosPorNombre();
                     break;
                 case 0:
                     System.out.println("Cerrando programa...");
@@ -162,6 +170,30 @@ public class Principal {
         System.out.println("Series de la categoría " + genero + ":");
         seriesPorCategoria.forEach(System.out::println);
 
+    }
+
+    private void mostrarSeriesPorTemporadasYEvaluacion() {
+        System.out.println("Ingrese la cantidad de temporadas: ");
+        int temporadas = teclado.nextInt();
+        System.out.println("Ingrese la evaluación: ");
+        Double evaluacion = teclado.nextDouble();
+
+        List<Serie> seriesPorTemporadasYEvaluacion = repositorio.seriesPorTemporadasYEvaluacion(temporadas, evaluacion);
+
+        System.out.println("Series con " + temporadas + " temporadas o menos y una evaluación mayor a " + evaluacion + ":");
+        seriesPorTemporadasYEvaluacion.forEach(System.out::println);
+
+    }
+
+    private void buscarEpisodiosPorNombre() {
+        System.out.println("Ingrese el nombre del episodio: ");
+        String nombre = teclado.nextLine();
+
+        List<Episodio> episodios = repositorio.episodiosPorNombre(nombre);
+
+        episodios.forEach(e ->
+                System.out.printf("Serie: %s Temporada: %s Episodio: %s Evaluacion: %s",
+                        e.getSerie(), e.getTemporada(), e.getNumeroEpisodeo(), e.getEvaluacion()));
     }
 
 
