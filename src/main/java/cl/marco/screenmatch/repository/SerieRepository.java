@@ -1,5 +1,6 @@
 package cl.marco.screenmatch.repository;
 
+import cl.marco.screenmatch.dto.EpisodioDTO;
 import cl.marco.screenmatch.model.Categoria;
 import cl.marco.screenmatch.model.Episodio;
 import cl.marco.screenmatch.model.Serie;
@@ -27,6 +28,9 @@ public interface SerieRepository extends JpaRepository<Serie, Long> {
 
     @Query("SELECT s FROM Serie s JOIN s.episodios e GROUP BY s ORDER BY MAX(e.fechaLanzamiento) DESC LIMIT 5")
     List<Serie> lanzamientosMasRecientes();
+
+    @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE s.id = :id AND e.temporada = :numeroTemporada")
+    List<Episodio> obtenerTemporadaPorNumero(Long id, Integer numeroTemporada);
 }
 
 
